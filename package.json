@@ -1,0 +1,29 @@
+{
+  "name": "monorepo-101",
+  "version": "1.0.0",
+  "author": "Sibelius Seraphini <sibeliusseraphini@gmail.com>",
+  "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/plugin-syntax-async-generators": "^7.0.0",
+    "@babel/plugin-transform-async-to-generator": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-typescript": "^7.0.0",
+    "lerna": "^3.16.4"
+  },
+  "license": "MIT",
+  "main": "index.js",
+  "private": true,
+  "repository": "https://github.com/sibelius/monorepo-101.git",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  }
+}

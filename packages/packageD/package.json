@@ -1,0 +1,14 @@
+{
+  "name": "@test/packageD",
+  "version": "1.0.0",
+  "dependencies": {
+    "@test/babel": "*",
+    "@test/packageB": "*",
+    "@test/packageC": "*"
+  },
+  "main": "dist/index.js",
+  "module": "src/index.ts",
+  "scripts": {
+    "build": "babel src --extensions \".es6,.js,.es,.jsx,.mjs,.ts,.tsx\" --ignore *.spec.js --out-dir dist --copy-files --source-maps --verbose"
+  }
+}

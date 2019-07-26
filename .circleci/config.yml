@@ -1,0 +1,103 @@
+version: 2.1
+
+defaults: &defaults
+  working_directory: ~/app
+
+executors:
+  node:
+    <<: *defaults
+    docker:
+      - image: circleci/node:lts
+
+aliases:
+  # Cache Management
+  - &restore-yarn-cache
+    keys:
+      - v0-yarn-cache
+  - &save-yarn-cache
+    paths:
+      - ~/.cache/yarn
+    key: v0-yarn-cache
+
+  - &restore-node-modules-cache
+    keys:
+      - v0-node-modules-{{ checksum "yarn.lock" }}
+  - &save-node-modules-cache
+    paths:
+      - node_modules
+    key: v0-node-modules-{{ checksum "yarn.lock" }}
+
+commands:
+  build_package:
+    description: "build a single package"
+    parameters:
+      pkg:
+        type: string
+    steps:
+      - run:
+          name: "Build << parameters.pkg >>"
+          command: |
+            yarn workspace << parameters.pkg >> build
+  should_build:
+    description: "command that halt it should not build this package"
+    parameters:
+      pkg:
+        type: string
+    steps:
+      - run:
+          name: "Should Build << parameters.pkg >>"
+          command: |
+            SHOULD_BUILD=true
+            if [ "$SHOULD_BUILD" == false ]; then
+                circleci-agent step halt
+            fi
+
+jobs:
+  install_deps:
+    executor: node
+    steps:
+      - checkout
+      - restore_cache: *restore-yarn-cache
+      - restore_cache: *restore-node-modules-cache
+      - run:
+          name: "Yarn install"
+          command: |
+            yarn install --frozen-lockfile --production=false --non-interactive --cache-folder ~/.cache/yarn
+      - save_cache: *save-node-modules-cache
+      - save_cache: *save-yarn-cache
+      - persist_to_workspace:
+          root: .
+          paths: .
+  conditional_build_package:
+    description: "conditional build a package"
+    parameters:
+      pkg:
+        type: string
+    executor: node
+    steps:
+      - should_build:
+          pkg: << parameters.pkg >>
+      - build_package:
+          pkg: << parameters.pkg >>
+
+workflows:
+  version: 2
+  full:
+    jobs:
+      - install_deps
+      - conditional_build_package:
+          pkg: "@test/packageA"
+          requires:
+            - install_deps
+#      - conditional_build_package:
+#          pkg: "@test/packageB"
+#          requires:
+#            - instal_deps
+#      - conditional_build_package:
+#          pkg: "@test/packageC"
+#          requires:
+#            - instal_deps
+#      - conditional_build_package:
+#          pkg: "@test/packageD"
+#          requires:
+#            - instal_deps
