@@ -75,6 +75,8 @@ jobs:
         type: string
     executor: node
     steps:
+      - attach_workspace:
+            at: ~/app
       - should_build:
           pkg: << parameters.pkg >>
       - build_package:
