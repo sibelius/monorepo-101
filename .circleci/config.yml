@@ -89,15 +89,15 @@ workflows:
           pkg: "@test/packageA"
           requires:
             - install_deps
-#      - conditional_build_package:
-#          pkg: "@test/packageB"
-#          requires:
-#            - instal_deps
-#      - conditional_build_package:
-#          pkg: "@test/packageC"
-#          requires:
-#            - instal_deps
-#      - conditional_build_package:
-#          pkg: "@test/packageD"
-#          requires:
-#            - instal_deps
+      - conditional_build_package:
+          pkg: "@test/packageB"
+          requires:
+            - install_deps
+      - conditional_build_package:
+          pkg: "@test/packageC"
+          requires:
+            - install_deps
+      - conditional_build_package:
+          pkg: "@test/packageD"
+          requires:
+            - install_deps
