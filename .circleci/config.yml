@@ -2,7 +2,7 @@ version: 2.1
 
 defaults: &defaults
   environment:
-    CIRCLE_COMPARE_URL: << pipeline.project.git_url >>/compare/<< pipeline.git.base_revision >>..<<pipeline.git.revision>>
+    CIRCLE_COMPARE_URL: << pipeline.project.git_url >>/compare/<< pipeline.git.base_revision >>...<<pipeline.git.revision>>
   working_directory: ~/app
 
 executors:
