@@ -76,7 +76,7 @@ jobs:
             echo $CIRCLE_COMPARE_URL
             TESTFILES=$(yarn entria-deploy changes $CIRCLE_COMPARE_URL)
             echo $TESTFILES
-            jest --forceExit --ci --maxWorkers=4 --findRelatedTests $TESTFILES
+            yarn jest --forceExit --ci --maxWorkers=4 --findRelatedTests $TESTFILES
 
   conditional_build_package:
     description: "conditional build a package"
