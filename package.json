@@ -18,7 +18,8 @@
     "@babel/preset-typescript": "7.10.4",
     "lerna": "3.22.1",
     "jest": "26.1.0",
-    "babel-jest": "26.1.0"
+    "babel-jest": "26.1.0",
+    "@entria/deploy": "0.0.1"
   },
   "license": "MIT",
   "main": "index.js",

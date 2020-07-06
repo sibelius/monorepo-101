@@ -1,1 +1,5 @@
-export const fnC = () => console.log('packageC');
+export const fnC = () => {
+  console.log('packageC');
+
+  return 3;
+}

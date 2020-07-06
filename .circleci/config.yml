@@ -25,13 +25,14 @@ commands:
   should_build:
     description: "command that halt it should not build this package"
     parameters:
-      pkg:
+      path:
         type: string
     steps:
       - run:
-          name: "Should Build << parameters.pkg >>"
+          name: "Should Build << parameters.path >>"
           command: |
-            SHOULD_BUILD=true
+            SHOULD_BUILD=$(yarn entria-deploy hasChanged $CIRCLE_COMPARE_URL << parameters.path >>)
+            echo $SHOULD_BUILD
             if [ "$SHOULD_BUILD" == false ]; then
                 circleci-agent step halt
             fi
@@ -64,17 +65,32 @@ jobs:
       - persist_to_workspace:
           root: .
           paths: .
+  tests:
+    executor: node
+    steps:
+      - attach_workspace:
+          at: ~/app
+      - run:
+          name: "Run only needed tests"
+          command: |
+            echo $CIRCLE_COMPARE_URL
+            TESTFILES=$(yarn entria-deploy changes $CIRCLE_COMPARE_URL)
+            echo $TESTFILES
+            yarn jest --forceExit --ci --maxWorkers=4 --findRelatedTests $TESTFILES
+
   conditional_build_package:
     description: "conditional build a package"
     parameters:
       pkg:
+        type: string
+      path:
         type: string
     executor: node
     steps:
       - attach_workspace:
             at: ~/app
       - should_build:
-          pkg: << parameters.pkg >>
+          path: << parameters.path >>
       - build_package:
           pkg: << parameters.pkg >>
 
@@ -83,19 +99,26 @@ workflows:
   full:
     jobs:
       - install_deps
+      - tests:
+          requires:
+            - install_deps
       - conditional_build_package:
+          path: "packages/packageA"
           pkg: "@test/packageA"
           requires:
-            - install_deps
+            - tests
       - conditional_build_package:
+          path: "packages/packageB"
           pkg: "@test/packageB"
           requires:
-            - install_deps
+            - tests
       - conditional_build_package:
+          path: "packages/packageC"
           pkg: "@test/packageC"
           requires:
-            - install_deps
+            - tests
       - conditional_build_package:
+          path: "packages/packageD"
           pkg: "@test/packageD"
           requires:
-            - install_deps
+            - tests
