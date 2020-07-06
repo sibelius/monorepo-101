@@ -31,7 +31,7 @@ commands:
       - run:
           name: "Should Build << parameters.path >>"
           command: |
-            SHOULD_BUILD=$(yarn entria-deploy hasChanged $CIRCLECI_COMPARE_URL << parameters.path >>)
+            SHOULD_BUILD=$(yarn entria-deploy hasChanged $CIRCLE_COMPARE_URL << parameters.path >>)
             echo $SHOULD_BUILD
             if [ "$SHOULD_BUILD" == false ]; then
                 circleci-agent step halt
@@ -73,7 +73,8 @@ jobs:
       - run:
           name: "Run only needed tests"
           command: |
-            TESTFILES=$(yarn entria-deploy changes $CIRCLECI_COMPARE_URL)
+            echo $CIRCLE_COMPARE_URL
+            TESTFILES=$(yarn entria-deploy changes $CIRCLE_COMPARE_URL)
             echo $TESTFILES
             jest --forceExit --ci --maxWorkers=4 --findRelatedTests $TESTFILES
 
