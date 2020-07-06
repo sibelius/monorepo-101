@@ -8,4 +8,10 @@ module.exports = {
   transform: {
     '^.+\\.(js|ts|tsx)?$': 'babel-jest',
   },
+  moduleNameMapper: {
+    '^@test/packageA$': '<rootDir>/../packageA/src/index.ts',
+    '^@test/packageB$': '<rootDir>/../packageB/src/index.ts',
+    '^@test/packageC$': '<rootDir>/../packageC/src/index.ts',
+    '^@test/packageD$': '<rootDir>/../packageD/src/index.ts',
+  },
 };

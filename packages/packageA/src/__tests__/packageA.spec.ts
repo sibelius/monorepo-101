@@ -1,3 +1,5 @@
+import { fnA } from '../index';
+
 it('should test packageA', () => {
-  expect(1).toBe(1);
+  expect(fnA()).toBe(1);
 });
