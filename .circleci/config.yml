@@ -38,11 +38,20 @@ commands:
                 circleci-agent step halt || exit 0
             fi
 
+aliases:
+  - &checkout_master
+    name: checkout master
+    command: |
+      if [[ $(git rev-parse --abbrev-ref HEAD) != "master" ]]; then
+        git branch -f master origin/master;
+      fi
+
 jobs:
   install_deps:
     executor: node
     steps:
       - checkout
+      - run: *checkout_master
       - run: echo "This is pipeline ID << pipeline.id >>"
       - run: echo $CIRCLE_COMPARE_URL
       - restore_cache:
