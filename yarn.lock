@@ -973,10 +973,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@entria/deploy@0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@entria/deploy/-/deploy-0.0.1.tgz#7414f069e50d4f97312d5e89deeb83f4c7c1b2c3"
-  integrity sha512-ieKchYkqkkkE1exwiF1H550DVu+7q5x+xX9yEh/HB2MHr7hZG6tE/ujmMku5221nbQ2QgzLikEH5z6XmOy0gUA==
+"@entria/deploy@0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@entria/deploy/-/deploy-0.0.2.tgz#369af1d4ad52b039e643f894c16698e5e5903837"
+  integrity sha512-vOI98m6S30lnNTU77/YGjcn/X6QgIYgxcAAXv+9fvaXfP/sZ1aCifv4TENQO9cu8PY0xvdt90EWrATzgjrEuRw==
   dependencies:
     "@babel/polyfill" "7.10.4"
     execa "4.0.2"
